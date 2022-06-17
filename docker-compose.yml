@@ -1,5 +1,7 @@
+version: "3.7"
+
 services:
-  app:
+  api:
     build: .
     command: python -u app.py
     ports:

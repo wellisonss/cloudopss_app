@@ -2,7 +2,11 @@ from flask import Flask, jsonify, request
 import pymongo
 from pymongo import MongoClient
 
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_Headers'] = 'Content-Type'
 
 
 def get_db():
@@ -21,6 +25,7 @@ def ping_server():
 
 
 @app.route('/clients', methods=['GET'])
+@cross_origin()
 def get_stored_clients():
     db = ""
     try:
