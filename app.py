@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, request
-import pymongo
 from pymongo import MongoClient
-
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -21,7 +19,7 @@ def get_db():
 
 @app.route('/')
 def ping_server():
-    return "Welcome to the world of animals."
+    return "API CloudOpss"
 
 
 @app.route('/clients', methods=['GET'])
@@ -32,7 +30,9 @@ def get_stored_clients():
         db = get_db()
         clientList = db.client_tb.find()
         clients = [{"id": client["id"], "name": client["name"],
-                    "email": client["email"], "phone": client["phone"], "address": client["address"], "profession": client["profession"]} for client in clientList]
+                    "email": client["email"], "phone": client["phone"],
+                    "address": client["address"], "profession": client["profession"]}
+                    for client in clientList]
         return jsonify({"clients": clients})
     except:
         pass
@@ -42,10 +42,12 @@ def get_stored_clients():
 
 
 @app.route('/clients', methods=['POST'])
+@cross_origin()
 def post_stored_clients():
     db = ""
     try:
         db = get_db()
+
         id = request.json['id']
         name = request.json['name']
         email = request.json['email']
